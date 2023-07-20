@@ -7,12 +7,12 @@ f = open('config.json')
 # a dictionary
 data = json.load(f)
 f.close() 
-# Iterating through the json
-# list
-for i in data:
-    print(i)
-  
-response = requests.post(data["token"], data["login"])
+
+response = requests.post(data["urls"]["login"], data["login"])
 #access_token = response.content["access_token"]
 response_json = response.json()
+id_token = response_json["id_token"]
+response = requests.get(data["urls"]["gateways")
+response_json = response.json()
+
 print(response_json)
