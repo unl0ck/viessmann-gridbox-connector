@@ -43,6 +43,7 @@ class GridboxConnector:
             print(response_json)
         else:
             self.get_token()
+            self.generate_header()
             self.retrieve_live_data(self)
 
 GridboxConnector(data).retrieve_live_data()
