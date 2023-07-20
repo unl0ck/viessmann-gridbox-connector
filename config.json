@@ -2,7 +2,7 @@
   "urls": {
     "login":"https://gridx.eu.auth0.com/oauth/token",
     "gateways":"https://api.gridx.de/gateways",
-    "live":"https://api.gridx.de/systems/{id}/live"
+    "live":"https://api.gridx.de/systems/{}/live"
   },
   "login":{
     "grant_type":"http://auth0.com/oauth/grant-type/password-realm",
