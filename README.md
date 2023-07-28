@@ -7,7 +7,10 @@ It is using the same Rest-API like the Dashboard and the App.
 Set your email and password in the config.json. 
 Use your Login Data from the App or from https://mygridbox.viessmann.com/login
 
-call `python read_live_data.py` for running
+```script shell
+pip install -r requirements.txt
+python read_live_data.py
+```
 
 # To-Do
 * Create a pypi lib
