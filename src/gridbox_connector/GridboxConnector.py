@@ -34,4 +34,4 @@ class GridboxConnector:
         else:
             self.get_token()
             self.generate_header()
-            self.retrieve_live_data(self)
+            self.retrieve_live_data()
