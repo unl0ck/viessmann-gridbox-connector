@@ -13,7 +13,6 @@ python read_live_data.py
 ```
 
 ## Example Output
-These Data will get
 ```script json
 {
     "consumption": 496,
