@@ -5,6 +5,9 @@ a GridboxConnector Lib to fetch your Data from the Cloud.
 It is using the same Rest-API like the Dashboard and the App.
 
 ## Installation
+```script shell
+pip install viessmann-gridbox-connector
+```
 Set your email and password in the config.json. 
 Use your Login Data from the App or from https://mygridbox.viessmann.com/login
 
