@@ -48,12 +48,20 @@ from gridbox_connector import GridboxConnector
 
 # Initialize the connector with your configuration
 config = {
-    "urls": {
-        "login": "https://example.com/login",
-        "gateways": "https://example.com/gateways",
-        "live": "https://example.com/live/{}",
-    },
-    "login": {"username": "your_username", "password": "your_password"},
+  "urls": {
+    "login":"https://gridx.eu.auth0.com/oauth/token",
+    "gateways":"https://api.gridx.de/gateways",
+    "live":"https://api.gridx.de/systems/{}/live"
+  },
+  "login":{
+    "grant_type":"http://auth0.com/oauth/grant-type/password-realm",
+    "username":"email",
+    "password":"password",
+    "audience":"my.gridx",
+    "client_id":"oZpr934Ikn8OZOHTJEcrgXkjio0I0Q7b",
+    "scope":"email openid",
+    "realm":"viessmann-authentication-db"
+  }
 }
 
 connector = GridboxConnector(config)
