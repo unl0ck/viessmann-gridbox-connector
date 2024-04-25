@@ -2,6 +2,7 @@ import requests
 import time
 class GridboxConnector:
     id_token = ""
+    gateways = []
 
     def __init__(self,config):
         self.login_url = config["urls"]["login"]
@@ -31,20 +32,25 @@ class GridboxConnector:
         self.headers = {"Authorization": "Bearer {}".format(self.id_token)}
 
     def get_gateway_id(self):
+        self.gateways.clear()
         response = requests.get(self.gateway_url,headers=self.headers)
         response_json = response.json()
-        gateway = response_json[0]
-        self.gateway_id = gateway["system"]["id"]
+        for gateway in response_json:
+            self.gateways.append(gateway["system"]["id"])
+        
 
     def retrieve_live_data(self):
-        response = requests.get(self.live_url.format(self.gateway_id),headers=self.headers)
-        if response.status_code == 200:
-            response_json = response.json()
-            #print(response_json)
-            return response_json
-        else:
-            print("Status Code {}".format(response.status_code))
-            print("Response {}".format(response.json()))
-            time.sleep(60)
-            self.init_auth()
-            return self.retrieve_live_data()
+        responses = []
+        for id in self.gateways:
+            response = requests.get(self.live_url.format(self.id), headers=self.headers)
+            if response.status_code == 200:
+                response_json = response.json()
+                responses.append(response_json)
+                #print(response_json)
+            else:
+                print("Status Code {}".format(response.status_code))
+                print("Response {}".format(response.json()))
+                time.sleep(60)
+                self.init_auth()
+                return self.retrieve_live_data()
+        return responses
