@@ -27,4 +27,4 @@ jobs:
             - run: pip install -r dev-requirements.txt
             
             - name: Bump Version
-              run: bump-my-version ${{ github.event.inputs.version }}
+              run: bump-my-version bump ${{ github.event.inputs.version }}
