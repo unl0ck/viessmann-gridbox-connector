@@ -1,0 +1,30 @@
+name: Version Workflow
+
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                description: 'Select the version type'
+                required: true
+                type: choice
+                default: 'patch'
+                options:
+                    - major
+                    - minor
+                    - patch
+                    - dev
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+            
+            - run: pip install -r dev-requirements.txt
+            
+            - name: Bump Version
+              run: bump-my-version ${{ github.event.inputs.version }}
