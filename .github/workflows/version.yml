@@ -31,4 +31,4 @@ jobs:
             
             - name: Bump Version
               run: bump-my-version bump ${{ github.event.inputs.version }}
-            - uses: stefanzweifel/git-auto-commit-action@v5
+            #- uses: stefanzweifel/git-auto-commit-action@v5
