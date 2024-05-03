@@ -22,7 +22,6 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
-            - uses: fregante/setup-git-user@v2
 
             - name: Set up Python
               uses: actions/setup-python@v5
@@ -31,4 +30,13 @@ jobs:
             
             - name: Bump Version
               run: bump-my-version bump ${{ github.event.inputs.version }}
-            #- uses: stefanzweifel/git-auto-commit-action@v5
+            
+            - name: set ENV
+              run: |
+                echo "TAG_NAME=v$(bump-my-version show current_version)" >> $GITHUB_ENV
+            - name: Commit and Tag
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                tagging_message: ${{ env.TAG_NAME }}
+                commit_message: ${{ env.TAG_NAME }}
+
