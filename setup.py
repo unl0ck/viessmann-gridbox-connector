@@ -7,6 +7,6 @@ setup(
     version='1.3.4',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    packages=['requests'],
-    install_requires=required,
+    packages=find_packages(),
+    install_requires=['requests',
 )
