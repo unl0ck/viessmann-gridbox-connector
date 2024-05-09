@@ -1,16 +1,18 @@
 import requests
 import time
-class GridboxConnector:
-    id_token = ""
-    gateways = []
 
-    def __init__(self,config):
+
+class GridboxConnector:
+    id_token: str = ""
+    gateways: list[str] = []
+
+    def __init__(self, config):
         self.login_url = config["urls"]["login"]
         self.login_body = config["login"]
         self.gateway_url = config["urls"]["gateways"]
         self.live_url = config["urls"]["live"]
         self.init_auth()
-    
+
     def init_auth(self):
         self.get_token()
         self.generate_header()
@@ -21,32 +23,32 @@ class GridboxConnector:
         response_json = response.json()
         print(response_json)
         if "id_token" in response_json:
-            self.id_token  = response_json["id_token"]
+            self.id_token = response_json["id_token"]
         else:
             print("token not found")
             print(response_json)
-            time.wait(60)
+            time.sleep(60)
             self.get_token()
-       
+
     def generate_header(self):
         self.headers = {"Authorization": "Bearer {}".format(self.id_token)}
 
     def get_gateway_id(self):
         self.gateways.clear()
-        response = requests.get(self.gateway_url,headers=self.headers)
+        response = requests.get(self.gateway_url, headers=self.headers)
         response_json = response.json()
         for gateway in response_json:
             self.gateways.append(gateway["system"]["id"])
-        
 
     def retrieve_live_data(self):
         responses = []
         for id in self.gateways:
-            response = requests.get(self.live_url.format(self.id), headers=self.headers)
+            response = requests.get(
+                self.live_url.format(id), headers=self.headers)
             if response.status_code == 200:
                 response_json = response.json()
                 responses.append(response_json)
-                #print(response_json)
+                # print(response_json)
             else:
                 print("Status Code {}".format(response.status_code))
                 print("Response {}".format(response.json()))
