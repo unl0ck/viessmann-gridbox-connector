@@ -24,7 +24,7 @@ class GridboxConnector:
         else:
             print("token not found")
             print(response_json)
-            time.wait(60)
+            time.sleep(60)
             self.get_token()
        
     def generate_header(self):
