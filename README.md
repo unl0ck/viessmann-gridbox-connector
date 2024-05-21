@@ -3,6 +3,7 @@
 
 a GridboxConnector Lib to fetch your Data from the Cloud.
 It is using the same Rest-API like the Dashboard and the App.
+![Screenshot vom mygridbox](images/screenshot.png)
 
 ## Installation
 ```script shell
