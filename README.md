@@ -1,5 +1,5 @@
 # Viessmann Gridbox Connector
-## **This is not an official Viessmann library**
+### **<h3 style="text-align: center;">This is not an official Viessmann library</h3>**
 
 a GridboxConnector Lib to fetch your Data from the Cloud.
 It is using the same Rest-API like the Dashboard and the App.
