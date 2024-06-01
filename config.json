@@ -1,16 +1,16 @@
 {
   "urls": {
-    "login":"https://gridx.eu.auth0.com/oauth/token",
-    "gateways":"https://api.gridx.de/gateways",
-    "live":"https://api.gridx.de/systems/{}/live"
+    "login": "https://gridx.eu.auth0.com/oauth/token",
+    "gateways": "https://api.gridx.de/gateways",
+    "live": "https://api.gridx.de/systems/{}/live"
   },
-  "login":{
-    "grant_type":"http://auth0.com/oauth/grant-type/password-realm",
-    "username":"email",
-    "password":"password",
-    "audience":"my.gridx",
-    "client_id":"oZpr934Ikn8OZOHTJEcrgXkjio0I0Q7b",
-    "scope":"email openid",
-    "realm":"viessmann-authentication-db"
+  "login": {
+    "grant_type": "http://auth0.com/oauth/grant-type/password-realm",
+    "username": "sa_helming@icloud.com",
+    "password": "Simon1991!",
+    "audience": "my.gridx",
+    "client_id": "oZpr934Ikn8OZOHTJEcrgXkjio0I0Q7b",
+    "scope": "email openid",
+    "realm": "viessmann-authentication-db"
   }
 }
