@@ -9,4 +9,12 @@ setup(
     install_requires=[
         'requests'
     ],
+    package_data={
+        'viessmann_gridbox_connector': ['config.json'],
+    },
+    entry_points={
+        'console_scripts': [
+            'viessmann=viessmann_gridbox_connector.cli:main',
+        ],
+    },
 )

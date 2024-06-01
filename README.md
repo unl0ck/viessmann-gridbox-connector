@@ -1,25 +1,52 @@
 # Viessmann Gridbox Connector
+
 ### **<h3 style="text-align: center;">This is not an official Viessmann library</h3>**
 
-a GridboxConnector Lib to fetch your Data from the Cloud.
-It is using the same Rest-API like the Dashboard and the App.
+Harness the power of your photovoltaic system with the GridboxConnector library. This versatile tool taps into the same REST API as the official dashboard and app, providing you with direct access to your data from the cloud.<br>
+
+Whether you're a developer looking to integrate solar data into your own project, or a power user seeking command-line access, GridboxConnector has you covered. With its dual functionality, you can either embed it into your Python project as a library or use it as a standalone command-line interface (CLI) tool.<br>
+
+**Take control of your solar data with GridboxConnector, and unlock the full potential of your photovoltaic system.**<br><br>
 ![Screenshot vom mygridbox](images/screenshot.png)
 
 ## Installation
+
 ```script shell
 pip install viessmann-gridbox-connector
 ```
-Set your email and password in the config.json. 
-Use your Login Data from the App or from https://mygridbox.viessmann.com/login
 
-### Setup the python environment and install all dependencies
+## Usage
+
+You can use the CLI to retrieve live data from the Viessmann Gridbox API or use the GridboxConnector class in your own code. <br>
+Use your Login data from the App or from https://mygridbox.viessmann.com/login
+
+### CLI
 
 ```script shell
-python -m venv venv
-.\venv\Scripts\activate
-pip install -r requirements.txt
+pip install viessmann-gridbox-connector
+viessmann --username <username> --password <password>
 ```
+
+### in your code
+
+```python
+from viessmann_gridbox_connector import GridboxConnector
+from importlib.resources import path
+import json
+
+with path('viessmann_gridbox_connector', 'config.json') as config_file:
+    with open(config_file, 'r') as file:
+        data = json.load(file)
+        data["login"]["username"] = "username"
+        data["login"]["password"] = "password"
+        connector = GridboxConnector(data)
+        # Retrieve live data
+        live_data = connector.retrieve_live_data()
+        print(live_data)
+```
+
 ### Example Output
+
 ```script json
 {
     "consumption": 496,
@@ -43,44 +70,12 @@ pip install -r requirements.txt
 }
 ```
 
-# Usage
-```python
-from gridbox_connector import GridboxConnector
+## Dependencies
 
-# Initialize the connector with your configuration
-config = {
-  "urls": {
-    "login":"https://gridx.eu.auth0.com/oauth/token",
-    "gateways":"https://api.gridx.de/gateways",
-    "live":"https://api.gridx.de/systems/{}/live"
-  },
-  "login":{
-    "grant_type":"http://auth0.com/oauth/grant-type/password-realm",
-    "username":"email",
-    "password":"password",
-    "audience":"my.gridx",
-    "client_id":"oZpr934Ikn8OZOHTJEcrgXkjio0I0Q7b",
-    "scope":"email openid",
-    "realm":"viessmann-authentication-db"
-  }
-}
+- requests
 
-connector = GridboxConnector(config)
+## Contributing
 
-# Retrieve live data
-live_data = connector.retrieve_live_data()
-print(live_data)
-
-```
-# Configuration
-You need to provide a configuration dictionary with the following keys:
-
-urls: Dictionary containing endpoint URLs.
-login: Dictionary containing login credentials.
-
-# Dependencies
-requests
-# Contributing
 If you'd like to contribute to viessmann-gridbox-connector, please follow these steps:
 
 Fork the repository.
@@ -89,7 +84,6 @@ Make your changes and write tests if possible.
 Run tests and ensure they pass.
 Submit a pull request.
 
-
-# License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.

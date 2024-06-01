@@ -17,7 +17,7 @@ class GridboxConnector:
 
     def init_logging(self):
         self.logger = logging.getLogger(__name__)
-        loglevel = os.getenv('LOGLEVEL', 'DEBUG')  # Default to DEBUG if LOGLEVEL is not set
+        loglevel = os.getenv('LOG_LEVEL', 'DEBUG')  # Default to DEBUG if LOGLEVEL is not set
         self.logger.setLevel(logging.getLevelName(loglevel))
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(funcName)s - %(message)s')
         console_handler = logging.StreamHandler()

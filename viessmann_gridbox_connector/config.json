@@ -6,8 +6,8 @@
   },
   "login": {
     "grant_type": "http://auth0.com/oauth/grant-type/password-realm",
-    "username": "sa_helming@icloud.com",
-    "password": "Simon1991!",
+    "username": "username",
+    "password": "password!",
     "audience": "my.gridx",
     "client_id": "oZpr934Ikn8OZOHTJEcrgXkjio0I0Q7b",
     "scope": "email openid",
