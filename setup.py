@@ -1,6 +1,12 @@
 from setuptools import setup, find_packages
-with open('requirements.txt') as f:
+import os
+
+setup_py_dir = os.path.dirname(os.path.abspath(__file__))
+requirements_file = os.path.join(setup_py_dir, 'requirements.txt')
+
+with open(requirements_file) as f:
     requirements = f.read().splitlines()
+
 setup(
     name='viessmann-gridbox-connector',
     version='1.0.3',
