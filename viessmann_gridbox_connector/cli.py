@@ -1,18 +1,18 @@
 import argparse
 from viessmann_gridbox_connector import GridboxConnector
-from importlib.resources import path
+from importlib.resources import files
 import json
 
 def retrieve_live_data(username, password):
-    with path('viessmann_gridbox_connector', 'config.json') as config_file:
-        with open(config_file, 'r') as file:
-            data = json.load(file)
-            data["login"]["username"] = username
-            data["login"]["password"] = password
-            connector = GridboxConnector(data)
-            # Retrieve live data
-            live_data = connector.retrieve_live_data()
-            return live_data
+    config_file = files('viessmann_gridbox_connector').joinpath('config.json')
+    with open(config_file, 'r') as file:
+        data = json.load(file)
+        data["login"]["username"] = username
+        data["login"]["password"] = password
+        connector = GridboxConnector(data)
+        # Retrieve live data
+        live_data = connector.retrieve_live_data()
+        return live_data
 
 def main():
     parser = argparse.ArgumentParser(description='Retrieve live data from Viessmann Gridbox.')
