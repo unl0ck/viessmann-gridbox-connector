@@ -11,6 +11,7 @@
     "audience": "my.gridx",
     "client_id": "oZpr934Ikn8OZOHTJEcrgXkjio0I0Q7b",
     "scope": "email openid",
-    "realm": "viessmann-authentication-db"
+    "realm": "viessmann-authentication-db",
+    "client_secret": ""
   }
 }

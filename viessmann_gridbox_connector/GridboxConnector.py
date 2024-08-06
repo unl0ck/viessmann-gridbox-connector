@@ -2,17 +2,26 @@ import requests
 import time
 import logging
 import os
+from authlib.integrations.requests_client import OAuth2Session
 
 class GridboxConnector:
     id_token: str = ""
     gateways: list[str] = []
+    token: dict = {}
+    client: OAuth2Session = None
+    config: dict = {}
+    username: str = ""
+    password: str = ""
 
     def __init__(self, config):
         self.init_logging()
+        self.config = config
         self.login_url = config["urls"]["login"]
         self.login_body = config["login"]
         self.gateway_url = config["urls"]["gateways"]
         self.live_url = config["urls"]["live"]
+        self.username = os.getenv('USERNAME', self.login_body["username"])
+        self.password = os.getenv('PASSWORD', self.login_body["password"])
         self.init_auth()
 
     def init_logging(self):
@@ -23,37 +32,42 @@ class GridboxConnector:
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
-        
+    
+    def get_new_token(self):
+        self.token = self.client.fetch_token(
+            self.login_url,
+            username=self.login_body["username"],
+            password=self.login_body["password"],
+            grant_type=self.login_body['grant_type'],
+            audience=self.login_body['audience'],
+            realm=self.login_body['realm'],
+            scope=self.login_body['scope']
+        )
+        self.logger.debug(f"Token expires at {self.token['expires_at']}")
+    
+    # Funktion zum Überprüfen und Erneuern des Tokens
+    def ensure_valid_token(self):
+        # Prüfe, ob das Token abgelaufen ist
+        expires_at = self.token.get('expires_at')
+        if expires_at is None or expires_at < time.time():
+            self.logger.info("Token ist abgelaufen oder nicht vorhanden, erneuern...")
+            self.get_new_token()  
+
+    def get_header(self):
+        self.ensure_valid_token()
+        return {"Authorization": f'Bearer {self.token["id_token"]}'}    
     
     def init_auth(self):
-        self.get_token()
-        self.generate_header()
+        client_id = self.login_body["client_id"]
+        client_secret = self.login_body["client_secret"]
+        self.client = OAuth2Session(client_id, client_secret, scope=self.login_body["scope"])
+        self.get_new_token()
         self.get_gateway_id()
-
-    def get_token(self):
-        try:
-            response = requests.post(self.login_url, self.login_body)
-            response_json = response.json()
-            self.logger.debug(response_json)
-            if "id_token" in response_json:
-                self.id_token = response_json["id_token"]
-            else:
-                self.logger.warn("token not found")
-                print(response_json)
-                time.sleep(60)
-                self.get_token()
-        except Exception as e:
-            self.logger.error(e)
-            time.sleep(60)
-            self.get_token()
-
-    def generate_header(self):
-        self.headers = {"Authorization": "Bearer {}".format(self.id_token)}
 
     def get_gateway_id(self):
         self.gateways.clear()
         try:
-            response = requests.get(self.gateway_url, headers=self.headers)
+            response = requests.get(self.gateway_url, headers=self.get_header())
             response_json = response.json()
             for gateway in response_json:
                 self.gateways.append(gateway["system"]["id"])
@@ -66,7 +80,7 @@ class GridboxConnector:
         responses = []
         for id in self.gateways:
             try:
-                response = requests.get(self.live_url.format(id), headers=self.headers)
+                response = requests.get(self.live_url.format(id), headers=self.get_header())
                 if response.status_code == 200:
                     response_json = response.json()
                     responses.append(response_json)
