@@ -7,7 +7,8 @@ setup(
     long_description_content_type='text/markdown',
     packages=find_packages(),
     install_requires=[
-        'requests'
+        'requests',
+        'authlib'
     ],
     package_data={
         'viessmann_gridbox_connector': ['config.json'],
