@@ -1,0 +1,16 @@
+{
+    "name": "Python Dev Container",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "github.copilot",
+                "ms-python.python",
+                "ahmadawais.emoji-log-vscode",
+                "ms-python.vscode-pylance",
+                "ms-python.debugpy"
+            ]
+        }
+    },
+    "postCreateCommand": "python -m venv .venv && . .venv/bin/activate && pip install -r dev-requirements.txt"
+}
