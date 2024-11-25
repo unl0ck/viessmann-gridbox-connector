@@ -97,7 +97,10 @@ class GridboxConnector:
         responses = []
         
         for id in self.gateways:
-            self.historical_url_created = self.historical_url.format(id, start, end, resolution)
+            interval = f"{start}/{end}"
+            import urllib.parse
+            encoded_string = urllib.parse.quote(interval)
+            self.historical_url_created = self.historical_url.format(id, encoded_string, resolution)
             try:
                 response = requests.get(self.historical_url_created, headers=self.get_header())
                 if response.status_code == 200:
@@ -105,6 +108,7 @@ class GridboxConnector:
                     responses.append(response_json)
                     # print(response_json)
                 else:
+                    self.logger.warning("Requested url {}".format(self.historical_url_created))
                     self.logger.warning("Status Code {}".format(response.status_code))
                     self.logger.warning("Response {}".format(response.json()))
             except Exception as e:
