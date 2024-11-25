@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='viessmann-gridbox-connector',
-    version='1.5.3',
+    version='1.6.0',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     description="Connector for Viessmann Gridbox to fetch live data from your Photovoltaic System",
