@@ -20,13 +20,14 @@ class GridboxConnector:
         self.login_body = config["login"]
         self.gateway_url = config["urls"]["gateways"]
         self.live_url = config["urls"]["live"]
+        self.historical_url = config["urls"]["historical"]
         self.username = os.getenv('USERNAME', self.login_body["username"])
         self.password = os.getenv('PASSWORD', self.login_body["password"])
         self.init_auth()
 
     def init_logging(self):
         self.logger = logging.getLogger(__name__)
-        loglevel = os.getenv('LOG_LEVEL', 'DEBUG')  # Default to DEBUG if LOGLEVEL is not set
+        loglevel = os.getenv('LOG_LEVEL', 'INFO')
         self.logger.setLevel(logging.getLevelName(loglevel))
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(funcName)s - %(message)s')
         console_handler = logging.StreamHandler()
@@ -86,8 +87,26 @@ class GridboxConnector:
                     responses.append(response_json)
                     # print(response_json)
                 else:
-                    self.logger.warn("Status Code {}".format(response.status_code))
-                    self.logger.warn("Response {}".format(response.json()))
+                    self.logger.warning("Status Code {}".format(response.status_code))
+                    self.logger.warning("Response {}".format(response.json()))
+            except Exception as e:
+                self.logger.error(e)
+        return responses
+    
+    def retrieve_historical_data(self, start, end, resolution='15m'):
+        responses = []
+        
+        for id in self.gateways:
+            self.historical_url_created = self.historical_url.format(id, start, end, resolution)
+            try:
+                response = requests.get(self.historical_url_created, headers=self.get_header())
+                if response.status_code == 200:
+                    response_json = response.json()
+                    responses.append(response_json)
+                    # print(response_json)
+                else:
+                    self.logger.warning("Status Code {}".format(response.status_code))
+                    self.logger.warning("Response {}".format(response.json()))
             except Exception as e:
                 self.logger.error(e)
         return responses
