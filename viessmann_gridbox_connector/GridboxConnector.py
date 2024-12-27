@@ -79,7 +79,7 @@ class GridboxConnector:
             time.sleep(60)
             self.get_gateway_id()
 
-    def retrieve_live_data(self, id):
+    def retrieve_live_data_by_id(self, id):
         try:
             response = requests.get(self.live_url.format(id), headers=self.get_header())
             if response.status_code == 200:
@@ -94,7 +94,7 @@ class GridboxConnector:
         responses = []
         for id in self.gateways:
             try:
-                response = self.retrieve_live_data(id)
+                response = self.retrieve_live_data_by_id(id)
                 if response.status_code == 200:
                     response_json = response.json()
                     responses.append(response_json)
@@ -102,7 +102,7 @@ class GridboxConnector:
                 self.logger.error(e)
         return responses
 
-    def retrieve_historical_data(self, id, start, end, resolution='15m'):
+    def retrieve_historical_data_by_id(self, id, start, end, resolution='15m'):
         interval = f"{start}/{end}"
         import urllib.parse
         encoded_string = urllib.parse.quote(interval)
@@ -122,7 +122,7 @@ class GridboxConnector:
         responses = []
         for id in self.gateways:
             try:
-                response = self.retrieve_historical_data(id, start, end, resolution)
+                response = self.retrieve_historical_data_by_id(id, start, end, resolution)
                 if response.status_code == 200:
                     response_json = response.json()
                     responses.append(response_json)
