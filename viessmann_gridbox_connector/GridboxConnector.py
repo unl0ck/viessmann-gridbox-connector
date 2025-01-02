@@ -79,6 +79,9 @@ class GridboxConnector:
             time.sleep(60)
             self.get_gateway_id()
 
+    def get_gateways(self):
+        return self.gateways
+
     def retrieve_live_data_by_id(self, id):
         try:
             response = requests.get(self.live_url.format(id), headers=self.get_header())
