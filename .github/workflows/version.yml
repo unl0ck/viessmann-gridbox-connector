@@ -39,7 +39,7 @@ jobs:
               run: |
                 echo "TAG_NAME=$(bump-my-version show current_version)" >> $GITHUB_ENV
             - name: Commit and Tag
-              uses: stefanzweifel/git-auto-commit-action@v5
+              uses: stefanzweifel/git-auto-commit-action@v6
               with:
                 tagging_message: v${{ env.TAG_NAME }}
                 commit_message: "Bump version: ${{ env.OLD_VERSIONE }} -> ${{ env.TAG_NAME }}"
