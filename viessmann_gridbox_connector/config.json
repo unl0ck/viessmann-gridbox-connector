@@ -10,9 +10,9 @@
     "username": "username",
     "password": "password!",
     "audience": "my.gridx",
-    "client_id": "oZpr934Ikn8OZOHTJEcrgXkjio0I0Q7b",
-    "scope": "email openid",
-    "realm": "viessmann-authentication-db",
+    "client_id": "mG0Phmo7DmnvAqO7p6B0WOYBODppY3cc",
+    "scope": "email openid offline_access",
+    "realm": "eon-home-authentication-db",
     "client_secret": ""
   }
 }
